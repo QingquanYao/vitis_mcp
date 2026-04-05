@@ -1,0 +1,14 @@
+{
+  "_comment": "Claude Desktop / Claude Code MCP 配置 - 将此内容合并到对应配置文件",
+
+  "mcpServers": {
+    "vitis": {
+      "_comment": "通过 Python 启动 FastMCP 服务器，Vitis 路径通过环境变量配置",
+      "command": "python",
+      "args": ["-m", "vitis_mcp"],
+      "env": {
+        "VITIS_PATH": "C:\\Xilinx\\Vitis\\2024.2\\bin\\vitis.bat"
+      }
+    }
+  }
+}
