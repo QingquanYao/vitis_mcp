@@ -2,13 +2,13 @@
 
 > Let Claude build, debug, and deploy your FPGA embedded software.
 
-**Vitis MCP** is a [Model Context Protocol](https://modelcontextprotocol.io/) server that gives AI assistants (Claude, etc.) full control over [AMD Vitis Unified IDE](https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html) -- from creating platforms and applications to programming FPGAs and debugging processors over JTAG.
+[**中文文档**](README_zh.md)
 
-**Vitis MCP** 是一个 MCP 服务器，让 AI 助手（Claude 等）能够完整控制 AMD Vitis Unified IDE -- 从创建平台和应用，到 FPGA 编程和处理器 JTAG 调试。
+**Vitis MCP** is a [Model Context Protocol](https://modelcontextprotocol.io/) server that gives AI assistants (Claude, etc.) full control over [AMD Vitis Unified IDE](https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html) -- from creating platforms and applications to programming FPGAs and debugging processors over JTAG.
 
 ---
 
-## Features / 特性
+## Features
 
 - **Persistent Session** -- Launches a `vitis -i` Python REPL that stays alive across tool calls. No more 30-second startup per command.
 - **28 Tools** -- Covers the full embedded workflow: platform creation, app build, BSP config, FPGA programming, memory/register access, and more.
@@ -18,27 +18,24 @@
 
 ---
 
-## Quick Start / 快速开始
+## Quick Start
 
-### 1. Install / 安装
+### 1. Install
 
 ```bash
-# Clone and install
 git clone https://github.com/QingquanYao/vitis_mcp.git
 cd vitis_mcp
 pip install -e .
 ```
 
-**Requirements / 依赖：**
+**Requirements:**
 - Python >= 3.10
 - AMD Vitis Unified IDE 2023.2+ (tested on 2024.2)
 - `mcp` Python package (auto-installed)
 
-### 2. Configure / 配置
+### 2. Configure
 
 Add to your Claude Code settings or Claude Desktop config:
-
-将以下内容添加到 Claude Code 设置或 Claude Desktop 配置中：
 
 ```json
 {
@@ -55,14 +52,10 @@ Add to your Claude Code settings or Claude Desktop config:
 ```
 
 > `VITIS_PATH` is optional if `vitis` is already on your system PATH.
->
-> 如果 `vitis` 已在系统 PATH 中，`VITIS_PATH` 可省略。
 
-### 3. Use / 使用
+### 3. Use
 
 Just ask Claude in natural language:
-
-直接用自然语言和 Claude 对话即可：
 
 ```
 "Create a standalone platform from design_wrapper.xsa for Cortex-A53"
@@ -72,54 +65,54 @@ Just ask Claude in natural language:
 
 ---
 
-## Tools / 工具列表
+## Tools
 
-### Project Management / 工程管理
-
-| Tool | Description |
-|------|-------------|
-| `start_session` | Start a persistent Vitis Python REPL / 启动持久化 Vitis Python 会话 |
-| `create_platform` | Create platform from XSA and build BSP / 从 XSA 创建平台并编译 BSP |
-| `get_platform_info` | Query platform details / 查询平台信息 |
-| `create_app` | Create bare-metal/FreeRTOS/Linux app / 创建应用程序 |
-| `import_sources` | Import C/C++ source files / 导入源文件 |
-| `set_bsp_config` | Modify BSP parameters / 修改 BSP 参数 |
-| `add_library` | Add software library (lwip, xilpm, ...) / 添加软件库 |
-| `build_app` | Compile application / 编译应用 |
-| `clean_app` | Clean build artifacts / 清理构建产物 |
-| `list_components` | List workspace components / 列出工作空间组件 |
-| `get_build_log` | Extract errors/warnings from build log / 提取编译日志中的错误和警告 |
-| `run_python_script` | Execute arbitrary Vitis Python code / 执行任意 Vitis Python 代码 |
-
-### Hardware Debug / 硬件调试
+### Project Management
 
 | Tool | Description |
 |------|-------------|
-| `hw_connect` | Connect to JTAG / hw_server / 连接 JTAG 调试器 |
-| `hw_list_targets` | List all debug targets / 列出所有调试目标 |
-| `hw_select_target` | Select target by ID / 选择目标处理器 |
-| `hw_program_fpga` | Download bitstream to FPGA / 下载比特流到 FPGA |
-| `hw_program_elf` | Program ELF and optionally run / 烧录 ELF 并运行 |
-| `hw_stop` | Halt processor / 停止处理器 |
-| `hw_continue` | Resume execution / 继续执行 |
-| `hw_step` | Step over / 单步执行 |
-| `hw_read_memory` | Read target memory / 读取内存 |
-| `hw_write_memory` | Write target memory / 写入内存 |
-| `hw_read_register` | Read register group / 读取寄存器组 |
-| `hw_backtrace` | Get call stack / 获取调用栈 |
-| `hw_disconnect` | Close debug session / 断开调试连接 |
-| `run_xsdb_command` | Execute arbitrary xsdb Python code / 执行任意 xsdb 命令 |
+| `start_session` | Start a persistent Vitis Python REPL |
+| `create_platform` | Create platform from XSA and build BSP |
+| `get_platform_info` | Query platform details (processors, domains) |
+| `create_app` | Create bare-metal / FreeRTOS / Linux application |
+| `import_sources` | Import C/C++ source files into application |
+| `set_bsp_config` | Modify BSP parameters |
+| `add_library` | Add software library (lwip, xilpm, ...) |
+| `build_app` | Compile application, return ELF path |
+| `clean_app` | Clean build artifacts |
+| `list_components` | List all workspace components |
+| `get_build_log` | Extract errors/warnings from build log |
+| `run_python_script` | Execute arbitrary Vitis Python API code |
 
-### Session Management / 会话管理
+### Hardware Debug
 
 | Tool | Description |
 |------|-------------|
-| `stop_session` | Close a Vitis session / 关闭会话 |
-| `list_sessions` | List all active sessions / 列出所有活跃会话 |
+| `hw_connect` | Connect to JTAG / hw_server |
+| `hw_list_targets` | List all debug targets |
+| `hw_select_target` | Select target processor by ID |
+| `hw_program_fpga` | Download bitstream to FPGA |
+| `hw_program_elf` | Program ELF and optionally run |
+| `hw_stop` | Halt processor execution |
+| `hw_continue` | Resume execution |
+| `hw_step` | Step over (single step) |
+| `hw_read_memory` | Read target memory |
+| `hw_write_memory` | Write target memory |
+| `hw_read_register` | Read register group |
+| `hw_backtrace` | Get call stack |
+| `hw_disconnect` | Close debug session |
+| `run_xsdb_command` | Execute arbitrary xsdb Python code |
+
+### Session Management
+
+| Tool | Description |
+|------|-------------|
+| `stop_session` | Close a Vitis session |
+| `list_sessions` | List all active sessions |
 
 ---
 
-## Architecture / 架构
+## Architecture
 
 ```
 Claude ──(stdio/MCP)──> FastMCP Server
@@ -133,11 +126,9 @@ Claude ──(stdio/MCP)──> FastMCP Server
 
 **Sentinel Protocol:** Each command is base64-encoded, wrapped in `try/except`, and terminated with a unique `<<<VMCP_xxxx_RC=N>>>` marker. The session reads stdout line-by-line until it matches the marker, ensuring reliable output collection regardless of command complexity.
 
-**哨兵协议：** 每条命令经 base64 编码后，包裹在 `try/except` 中，并以唯一的 `<<<VMCP_xxxx_RC=N>>>` 标记结束。会话逐行读取 stdout 直到匹配标记，确保无论命令多复杂都能可靠地收集输出。
-
 ---
 
-## Works with Vivado MCP / 与 Vivado MCP 协同
+## Works with Vivado MCP
 
 ```
 Vivado MCP                              Vitis MCP
@@ -154,7 +145,7 @@ Vivado MCP                              Vitis MCP
 
 ---
 
-## Project Structure / 项目结构
+## Project Structure
 
 ```
 src/vitis_mcp/
@@ -174,6 +165,6 @@ src/vitis_mcp/
 
 ---
 
-## License / 许可
+## License
 
 MIT
